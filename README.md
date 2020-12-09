@@ -1,10 +1,10 @@
-# chirp-gentoo
-A custom repository for CHIRP, a tool for configuring HAM radios.
+# py3-CHIRP
+A fork of CHIRP for testing with Python 3.
 
 ## What's Different?
-The official CHIRP project does not support Python 3 and depends on pygtk which hasn't seen a stable release since April 2011.
+The official CHIRP project's main branch does not support Python 3 and depends on pygtk which hasn't seen a stable release since April 2011.
 
-chirp-gentoo is a fork of the py3 branch of the official CHIRP project with some syntax fixes leftover from Python2.
+py3-CHIRP is a fork of the py3 branch of the official CHIRP project with some syntax fixes that seem to be leftover from Python2.
 
 ## The Story
 
