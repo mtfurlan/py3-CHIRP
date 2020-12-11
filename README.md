@@ -6,6 +6,26 @@ The official CHIRP project's main branch does not support Python 3 and depends o
 
 py3-CHIRP is a fork of the py3 branch of the official CHIRP project with some syntax fixes that seem to be leftover from Python2.
 
+## Dependencies
+
+py3-CHIRP has been tested in Python3.9 on various platforms. Known dependencies that don't come out of the box with Python are as follows:
+- pyserial
+- wxpython
+- future
+- six
+- pypiwin32 (for Windows)
+
+## Testing
+
+Depending on the platform you're testing on, you should use a different script to start CHIRP.
+
+### Linux & MacOS
+`chirpw`
+
+### Windows
+`chirpwx.py`
+
+
 ## The Story
 
 When I first started using Gentoo again CHIRP was still a part of the main Gentoo Portage Repository.
