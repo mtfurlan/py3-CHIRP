@@ -1,1 +1,6 @@
 **/*.pyc
+**/*.orig
+**/*.rej
+**/*.mo
+**/*.pot
+.pytest_cache
