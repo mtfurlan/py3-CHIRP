@@ -45,7 +45,9 @@ I was able to download an image from my BF-F8HP, fully reconfigure it and upload
 
 ### Bugs and Patches Submitted to Official Project
 
- - https://chirp.danplanet.com/issues/8475 - Fixed old  Python2 Syntax
+ - https://chirp.danplanet.com/issues/8475 - Fixed old Python2 Syntax
+ - https://chirp.danplanet.com/issues/8545 - Syntax Errors in Driver Files
+ - https://chirp.danplanet.com/issues/8549 - Updated `string.uppercase` to `string.ascii_uppercase`
 
 ### Related Bugs in Gentoo
 
