@@ -8,3 +8,4 @@
 # Test results
 .pytest_cache
 .tox
+.eggs
