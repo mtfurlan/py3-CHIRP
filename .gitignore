@@ -4,3 +4,4 @@
 **/*.mo
 **/*.pot
 .pytest_cache
+.tox
