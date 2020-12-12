@@ -1,7 +1,10 @@
+# Precompiled stuff and misc leftover from original project
 **/*.pyc
 **/*.orig
 **/*.rej
 **/*.mo
 **/*.pot
+
+# Test results
 .pytest_cache
 .tox
