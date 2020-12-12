@@ -15,15 +15,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+import string
 
 from chirp.drivers import yaesu_clone
 from chirp import chirp_common, directory, bitwise
 from chirp.settings import RadioSettingGroup, RadioSetting, RadioSettings, \
-    RadioSettingValueInteger, RadioSettingValueString, \
-    RadioSettingValueList, RadioSettingValueBoolean, \
+    RadioSettingValueString, \
+    RadioSettingValueList,  \
     InvalidValueError
 from textwrap import dedent
-import string
+
 LOG = logging.getLogger(__name__)
 
 # Testing
