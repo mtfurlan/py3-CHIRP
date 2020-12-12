@@ -2051,9 +2051,18 @@ of file.
         except ImportError:
             pass
 
+        # for gtk3
+        try:
+            import gi
+            gi.require_version("Gtk", "3.0")
+            from gi.repository import Gtk
+            macapp = Gtk.Application()
+        except ImportError:
+            pass
+
         if macapp is None:
             LOG.error("No MacOS support")
-            return
+        return
 
         this_platform = platform.get_platform()
         icon = (this_platform.find_resource("chirp.png") or

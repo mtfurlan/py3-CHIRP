@@ -1,5 +1,5 @@
 # Copyright 2010 Dan Smith <dsmith@danplanet.com>
-# Copyright 2017 Nicolas Pike <nick@zbm2.com>
+# Copyright 2017 - 2019 Nicolas Pike <nick@zbm2.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 
 import logging
 import string
+from textwrap import dedent
 
 from chirp.drivers import yaesu_clone
 from chirp import chirp_common, directory, bitwise
@@ -23,7 +24,6 @@ from chirp.settings import RadioSettingGroup, RadioSetting, RadioSettings, \
     RadioSettingValueString, \
     RadioSettingValueList,  \
     InvalidValueError
-from textwrap import dedent
 
 LOG = logging.getLogger(__name__)
 
@@ -505,9 +505,9 @@ class FT70Radio(yaesu_clone.YaesuCloneModeRadio):
     _DTMF_SPEED = ("50ms", "100ms")
     _DTMF_DELAY = ("50ms", "250ms", "450ms", "750ms", "1000ms")
     _TEMP_CF = ("Centigrade", "Fahrenheit")
-    _APO_SELECT = ("Off", "0.5H", "1.0H", "1.5H", "2.0H", "2.5H", "3.0H", "3.5H", "4.0H", "4.5H", "5.0H",
-                   "5.5H", "6.0H", "6.5H", "7.0H", "7.5H", "8.0H", "8.5H", "9.0H", "9.5H", "10.0H", "10.5H",
-                   "11.0H", "11.5H", "12.0H")
+    _APO_SELECT = ("Off", "0.5H", "1.0H", "1.5H", "2.0H", "2.5H", "3.0H", \
+    "3.5H", "4.0H", "4.5H", "5.0H", "5.5H", "6.0H", "6.5H", "7.0H", "7.5H", \
+    "8.0H", "8.5H", "9.0H", "9.5H", "10.0H", "10.5H", "11.0H", "11.5H", "12.0H")
     _MONI_TCALL = ("Monitor", "Tone-CALL")
     _HOME_REV = ("Home", "Reverse")
     _LOCK = ("KEY", "DIAL", "Key+Dial", "PTT", "Key+PTT", "Dial+PTT", "ALL")
@@ -515,7 +515,7 @@ class FT70Radio(yaesu_clone.YaesuCloneModeRadio):
     _BEEP_LEVEL = ("Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7")
     _SET_MODE = ("Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Level 6", "Level 7")
     _RX_SAVE = ("OFF", "0.2s", ".3s", ".4s", ".5s", ".6s", ".7s", ".8s", ".9s", "1.0s", "1.5s",
-                "2.0s", "2.5s", "3.0s", "3.5s", "4.0s", "4.5s", "5.0s", "5.5s", "6.0s", "6.5s", "7.0s",
+    "2.0s", "2.5s", "3.0s", "3.5s", "4.0s", "4.5s", "5.0s", "5.5s", "6.0s", "6.5s", "7.0s",
                 "7.5s", "8.0s", "8.5s", "9.0s", "10.0s", "15s", "20s", "25s", "30s", "35s", "40s", "45s", "50s", "55s",
                 "60s")
     _VFO_MODE = ("ALL", "BAND")
@@ -944,8 +944,7 @@ class FT70Radio(yaesu_clone.YaesuCloneModeRadio):
 
         # MYCALL
         mycall = self._memobj.my_call
-        mycallstr = str(mycall.callsign).rstrip("\xFF")
-    
+        mycallstr = str(mycall.callsign).rstrip("\xFF")    
         mycallentry = RadioSettingValueString(0, 10, mycallstr, False, charset=self._MYCALL_CHR_SET)
         rs = RadioSetting('mycall.callsign', 'MYCALL', mycallentry)
         rs.set_apply_callback(self.apply_mycall, mycall)
