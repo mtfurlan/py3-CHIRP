@@ -134,7 +134,7 @@ class AlincoStyleRadio(chirp_common.CloneModeRadio):
         return data
 
     def _download(self, limit):
-        seexcept (Exception, e):lf._identify()
+        self._identify()
 
         data = ""
         for addr in range(0, limit, 16):
