@@ -164,7 +164,7 @@ def _ident_radio(radio):
         try:
             data = _do_ident(radio, magic)
             return data
-        except (errors.RadioError, e):
+        except errors.RadioError as e:
             print (e)
             error = e
             time.sleep(2)
@@ -336,7 +336,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
             _upload(self)
         except errors.RadioError:
             raise
-        except (Exception, e):
+        except Exception as e:
             # If anything unexpected happens, make sure we raise
             # a RadioError and log the problem
             LOG.exception('Unexpected error during upload')
@@ -622,7 +622,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
                     elif element.value.get_mutable():
                         LOG.debug("Setting %s = %s" % (setting, element.value))
                         setattr(obj, setting, element.value)
-                except (Exception, e):
+                except Exception as e:
                     LOG.debug(element.get_name())
                     raise
 
@@ -636,6 +636,6 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
                     value = int(val.get_value() * 10)
                 LOG.debug("Setting fm_presets = %s" % (value))
                 self._memobj.fm_presets = value
-            except (Exception, e):
+            except Exception as e:
                 LOG.debug(element.get_name())
                 raise

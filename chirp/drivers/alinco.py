@@ -134,7 +134,7 @@ class AlincoStyleRadio(chirp_common.CloneModeRadio):
         return data
 
     def _download(self, limit):
-        self._identify()
+        seexcept (Exception, e):lf._identify()
 
         data = ""
         for addr in range(0, limit, 16):
@@ -199,7 +199,7 @@ class AlincoStyleRadio(chirp_common.CloneModeRadio):
             self._mmap = self._download(self._memsize)
         except errors.RadioError:
             raise
-        except (Exception, e):
+        except Exception as e:
             raise errors.RadioError("Failed to communicate with radio: %s" % e)
         self.process_mmap()
 
@@ -208,7 +208,7 @@ class AlincoStyleRadio(chirp_common.CloneModeRadio):
             self._upload(self._memsize)
         except errors.RadioError:
             raise
-        except (Exception, e):
+        except Exception as e:
             raise errors.RadioError("Failed to communicate with radio: %s" % e)
 
     def get_raw_memory(self, number):
