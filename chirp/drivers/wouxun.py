@@ -23,7 +23,7 @@ from chirp.settings import RadioSetting, RadioSettingGroup, \
                 RadioSettingValueBoolean, RadioSettingValueList, \
                 RadioSettingValueInteger, RadioSettingValueString, \
                 RadioSettingValueFloat, RadioSettings
-from wouxun_common import wipe_memory, do_download, do_upload
+from .wouxun_common import wipe_memory, do_download, do_upload
 from textwrap import dedent
 
 LOG = logging.getLogger(__name__)
