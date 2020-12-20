@@ -6,8 +6,6 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 
 ## Radios
 
-<span style="background-color:green">
-
 # Abbree
 
 - AR-F3 (use Baofeng UV-82III)
@@ -58,7 +56,7 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - BF-E500S (use UV-5R)
 - BF-F8, F8+ (use UV-5R)
 - BF-F8+III (use Radioddity UV-5RX3)
-- BF-F8HP (3 power levels) *`TESTED`*
+- BF-F8HP (3 power levels) <mark style="background-color: lightblue">`TESTED`</mark>
 - BF-F9 (use UV-5R)
 - BF-F9V2+ (use BF-F8HP)
 - BF-F11 (use UV-5R)
