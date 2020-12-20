@@ -8,24 +8,24 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 
 # Abbree
 
-    - AR-F3 (use Baofeng UV-82III)
-    - AR-F8 (use Wouxun KG-UV8D)
+- AR-F3 (use Baofeng UV-82III)
+- AR-F8 (use Wouxun KG-UV8D)
 
 # Alinco
 
-    - DJ-175T
-    - DJ-596T
-    - DJ-G7EG
-    - DR-03T
-    - DR-06T
-    - DR-135T
-    - DR-235T
-    - DR-435T
+- DJ-175T
+- DJ-596T
+- DJ-G7EG
+- DR-03T
+- DR-06T
+- DR-135T
+- DR-235T
+- DR-435T
 
 # Ansoko
 
-    - A-5R
-    - A-8S
+- A-5R
+- A-8S
 
 # AnyTone
 
@@ -46,9 +46,9 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 
 # Baofeng/Pofung
 
-    - 997-S (Foscam Digital Technologies) (use UV-5R)
-    - B-580T (use UV-5R)
-    - BF-88E (use BF-888S)
+- 997-S (Foscam Digital Technologies) (use UV-5R)
+- B-580T (use UV-5R)
+- BF-88E (use BF-888S)
     - BF-666S/777S/888S
     - BF-9100 (use BF/T1)
     - BF-A58, BF-A58S
