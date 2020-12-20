@@ -81,7 +81,7 @@ class TS850Radio(KenwoodLiveRadio):
         rf.valid_bands = TS850_BANDS
         rf.valid_characters = chirp_common.CHARSET_UPPER_NUMERIC
         rf.valid_duplexes = TS850_DUPLEX
-        rf.valid_modes = TS850_MODES.keys()
+        rf.valid_modes = list(TS850_MODES.keys())
         rf.valid_skips = TS850_SKIP
         rf.valid_tmodes = TS850_TMODES
 

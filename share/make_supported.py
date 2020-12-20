@@ -58,7 +58,7 @@ def supported_row(radio):
             try:
                 value = ", ".join([str(x) for x in value
                                    if not str(x).startswith("?")])
-            except Exception, e:
+            except Exception as e:
                 raise
 
         if key == "memory_bounds":
@@ -167,7 +167,30 @@ for radio in directory.DRV_TO_RADIO.values():
 def get_key(rc):
     return '%s %s %s' % (rc.VENDOR, rc.MODEL, rc.VARIANT)
 
-for radio in sorted(models, cmp=lambda a, b: get_key(a) < get_key(b) and -1 or 1):
+
+
+# Python2 to 3 wrapper for converting an old comparison below to a key
+def cmp_to_key(mycmp):
+    'Convert a cmp= function into a key= function'
+    class K:
+        def __init__(self, obj, *args):
+            self.obj = obj
+        def __lt__(self, other):
+            return mycmp(self.obj, other.obj) < 0
+        def __gt__(self, other):
+            return mycmp(self.obj, other.obj) > 0
+        def __eq__(self, other):
+            return mycmp(self.obj, other.obj) == 0
+        def __le__(self, other):
+            return mycmp(self.obj, other.obj) <= 0
+        def __ge__(self, other):
+            return mycmp(self.obj, other.obj) >= 0
+        def __ne__(self, other):
+            return mycmp(self.obj, other.obj) != 0
+    return K
+
+
+for radio in sorted(models, key=cmp_to_key(lambda a, b: get_key(a) < get_key(b) and -1 or 1)):
     if counter % 10 == 0:
         output(header_row())
     _radio = radio(None)
