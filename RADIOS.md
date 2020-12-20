@@ -56,16 +56,16 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - BF-E500S (use UV-5R)
 - BF-F8, F8+ (use UV-5R)
 - BF-F8+III (use Radioddity UV-5RX3)
-- BF-F8HP (3 power levels) <mark style="background-color: lightblue">`TESTED`</mark>
+- BF-F8HP (3 power levels) `TESTED`
 - BF-F9 (use UV-5R)
-- BF-F9V2+ (use BF-F8HP)
+- BF-F9V2+ (use BF-F8HP) `TESTED`
 - BF-F11 (use UV-5R)
 - BF-R3 (use Radioddity UV-5RX3)
 - BF-R5 Mini (use BF-888S)
 - BF-S5 Plus (use UV-82III)
 - BF-T1
 - BF-UV9R+HP (use UV-82WP)
-- BF-UV10R (use BF-F8HP 3 power levels)
+- BF-UV10R (use BF-F8HP 3 power levels) `TESTED`
 - BF-UVF10 (use BF-A58S)
 - BF-UVB2+ (use UV-5R)
 - BF-V9 (use BF-888)
@@ -74,7 +74,7 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - FF-12P (use UV-5R)
 - GT-1 (use BF-888S)
 - GT-3, GT-3 MK II (use UV-5R)
-- GT-3TP (use BF-F8HP)
+- GT-3TP (use BF-F8HP) `TESTED`
 - GT-3WP
 - GT-5 (use UV-82)
 - GT-5TP (use UV-82HP)
@@ -82,19 +82,19 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - UV-3R
 - UV-5R and variants (2 power levels)
 - UV-5R V2+, UV-5R2 (use UV-5R)
-- UV-5R+ (use BF-F8HP)
+- UV-5R+ (use BF-F8HP) `TESTED`
 - UV-5R++ (use UV-5R)
-- UV-5R7W (use BF-F8HP)
+- UV-5R7W (use BF-F8HP) `TESTED`
 - UV-5RA, UV-5RA+, UV-5RAX, UV-5RAX+ (use UV-5R)
 - UV-5RB (use UV-5R)
 - UV-5RC, UV-5RC, UV-5RCX+ (use UV-5R)
 - UV-5RD (use UV-5R)
 - UV-5RE, UV-5RE+ (use UV-5R)
 - UV-5RG, RK, RQ, RS, RT, RU (use UV-5R)
-- UV-5RHP (use BF-F8HP)
+- UV-5RHP (use BF-F8HP) `TESTED`
 - UV-5RIII (use Radioddity UV-5RX3)
-- UV-5RM HP (use BF-F8HP)
-- UV-5RTP (use BF-F8HP)
+- UV-5RM HP (use BF-F8HP) `TESTED`
+- UV-5RTP (use BF-F8HP) `TESTED`
 - UV-5RWP (use UV-82WP)
 - UV-5RX3 (use Radioddity UV-5RX3)
 - UV-5S, 5X (use UV-5R)
@@ -117,7 +117,7 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - UV-B2 (use UV-82)
 - UV-B2+, B3+ (use UV-5R)
 - UV-B5, B6
-- UV-S9 (use BF-F8HP)
+- UV-S9 (use BF-F8HP) `TESTED`
 - UV-S9T (use Radioddity UV-5RX3)
 - UV-X9 (use UV-82HP)
 
@@ -354,7 +354,7 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - H-777 (use Baofeng BF-888)
 - RT1
 - RT5 with 2 power levels (use Baofeng UV-5R)
-- RT5 with 3 power levels (variant of Baofeng BF-F8HP)
+- RT5 with 3 power levels (variant of Baofeng BF-F8HP) `TESTED`
 - RT-5R, RT-5RV (Variants of Baofeng UV-5R)
 - RT6
 - RT21
@@ -372,7 +372,7 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 
 # Sainsonic
 
-- GT-3TP (use Baofeng BF-F8HP)
+- GT-3TP (use Baofeng BF-F8HP) `TESTED`
 - GT-890 (Variant of QYT KT8900)
 
 # Standard Horizon
