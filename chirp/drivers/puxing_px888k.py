@@ -527,7 +527,11 @@ BACKLIGHT_MODES = ["Off", "Auto", "On"]
 TONE_RESET_TIME = ['Off'] + ['%ds' % x for x in range(1, 256)]
 DTMF_TONE_RESET_TIME = TONE_RESET_TIME[0:16]
 
-DTMF_GROUPS = zip(["Off", "A", "B", "C", "D", "*", "#"], [255]+range(10, 16))
+temp_list = [255]
+for x in range(10,16):
+    temp_list.append(x)
+
+DTMF_GROUPS = zip(["Off", "A", "B", "C", "D", "*", "#"], temp_list)
 FIVE_TONE_STANDARDS = ['ZVEI1', 'ZVEI2', 'CCIR1', 'CCITT']
 
 # should mimic the defaults in the memedit MemoryEditor somewhat
@@ -540,13 +544,18 @@ SANE_MEMORY_DEFAULT = b"\x14\x61\x00\x00\x14\x61\x00\x00" + \
 # these two option sets are listed differently like this in the stock software,
 # so I'm keeping them separate for now if they are in fact identical
 # in behaviour, that should probably be amended
+temp_list = [255]
+for x in range(1,4):
+    temp_list.append(x)
+
 DTMF_ALERT_TRANSPOND = zip(['Off', 'Call alert',
                             'Transpond-alert',
                             'Transpond-ID code'],
-                           [255]+range(1, 4))
+                           temp_list)
+
 FIVE_TONE_ALERT_TRANSPOND = zip(['Off', 'Alert tone',
                                  'Transpond', 'Transpond-ID code'],
-                                [255]+range(1, 4))
+                                temp_list)
 
 BFM_BANDS = ['87.5-108MHz', '76.0-91.0MHz', '76.0-108.0MHz', '65.0-76.0MHz']
 BFM_STRIDE = ['100kHz', '50kHz']

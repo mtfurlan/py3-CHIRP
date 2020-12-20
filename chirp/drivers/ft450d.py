@@ -304,8 +304,23 @@ class FT450DRadio(yaesu_clone.YaesuCloneModeRadio):
         struct mem_struct current;
 
     """
-    _CALLSIGN_CHARSET = [chr(x) for x in range(ord("0"), ord("9") + 1) +
-                        range(ord("A"), ord("Z") + 1) + [ord(" ")]]
+    temp_list = []
+
+    for x in range(ord("0"),ord("9")+1):
+        temp_list.append(chr(x))
+
+    for x in range(ord("A"),ord("Z")+1):
+        temp_list.append(chr(x))
+
+    temp_list.append(chr(ord(" ")))
+
+	#print(temp_list)
+
+    #_CALLSIGN_CHARSET = [chr(x) for x in range(ord("0"), ord("9") + 1) +
+    #                    range(ord("A"), ord("Z") + 1) + [ord(" ")]]
+
+    _CALLSIGN_CHARSET = temp_list
+    
     _CALLSIGN_CHARSET_REV = dict(zip(_CALLSIGN_CHARSET,
                                      range(0, len(_CALLSIGN_CHARSET))))
 
