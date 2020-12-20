@@ -14,10 +14,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
-try:
-    import mox
-except ImportError:
-    from mox3 import mox
+
+from mox3 import mox
+
+#try:
+#    import mox3
+#except ImportError:
+#    from mox3 import mox
+
 import os
 
 from tests.unit import base

@@ -3,10 +3,12 @@ import unittest
 
 import mock
 
-try:
-    import mox
-except ImportError:
-    from mox3 import mox
+from mox3 import mox
+
+#try:
+#    import mox3
+#except ImportError:
+#    from mox3 import mox
 
 import warnings
 warnings.simplefilter('ignore', Warning)
