@@ -503,6 +503,3 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - MP-800 (use TYT TH-9800)
 - ZT-V8, V8A, V8A+ (use Baofeng UV-R5)
 - ZT-X6 (Variant of Retevis RT22)
-
-
-</span>
