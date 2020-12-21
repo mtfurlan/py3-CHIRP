@@ -50,7 +50,7 @@ class TS2000Radio(KenwoodLiveRadio):
         rf.valid_tuning_steps = list(TS2000_SSB_STEPS + TS2000_FM_STEPS)
         rf.valid_bands = [(1000, 1300000000)]
         rf.valid_skips = ["", "S"]
-        rf.valid_duplexes = TS2000_DUPLEX.values()
+        rf.valid_duplexes = list(TS2000_DUPLEX.values())
 
         # TS-2000 uses ";" as a message separator even though it seems to
         # allow you to to use all printable ASCII characters at the manual

@@ -227,3 +227,5 @@ def safe_import_drivers(limit=None):
             __import__('chirp.drivers.%s' % driver_module)
         except Exception as e:
             print('Failed to import %s: %s' % (module, e))
+            #Use the below line for more information when troubleshooting
+            #traceback.print_exc()

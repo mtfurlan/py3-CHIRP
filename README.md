@@ -17,6 +17,8 @@ py3-CHIRP has been tested in Python3.9 on various platforms. Known dependencies 
 
 ## Testing
 
+For a list of supported radios (tested and untested) see [RADIOS.md](https://github.com/mpoletiek/py3-CHIRP/blob/main/RADIOS.md)
+
 Depending on the platform you're testing on, you should use a different script to start CHIRP.
 
 ### Linux & MacOS
@@ -24,6 +26,7 @@ Depending on the platform you're testing on, you should use a different script t
 
 ### Windows
 `chirpwx.py`
+
 
 
 ## The Story

@@ -1,8 +1,11 @@
 import unittest
-try:
-    import mox
-except ImportError:
-    from mox3 import mox
+
+from mox3 import mox
+
+#try:
+#    import mox3
+#except ImportError:
+#    from mox3 import mox
 
 from tests.unit import base
 from chirp import chirp_common

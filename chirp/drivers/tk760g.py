@@ -264,12 +264,19 @@ struct {
 MEM_SIZE = 0x8000  # 32,768 bytes
 BLOCK_SIZE = 256
 BLOCKS = MEM_SIZE / BLOCK_SIZE
-MEM_BLOCKS = range(0, BLOCKS)
+MEM_BLOCKS = range(0, int(BLOCKS))
 
 # define and empty block of data, as it will be used a lot in this code
 EMPTY_BLOCK = "\xFF" * 256
 
-RO_BLOCKS = range(0x10, 0x1F) + range(0x59, 0x5f)
+RO_BLOCKS = []
+for x in range(0x10,0x1F):
+	RO_BLOCKS.append(x)
+	
+for x in range(0x59,0x5f):
+	RO_BLOCKS.append(x)
+
+#RO_BLOCKS = range(0x10, 0x1F) + range(0x59, 0x5f)
 ACK_CMD = "\x06"
 
 POWER_LEVELS = [chirp_common.PowerLevel("Low", watts=1),
