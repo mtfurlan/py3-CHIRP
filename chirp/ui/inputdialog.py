@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
+from gi.repository import Gtk
 import logging
 
 from chirp.ui.miscwidgets import make_choice
@@ -22,21 +22,21 @@ from chirp.ui import reporting
 LOG = logging.getLogger(__name__)
 
 
-class TextInputDialog(gtk.Dialog):
+class TextInputDialog(Gtk.Dialog):
     def respond_ok(self, _):
-        self.response(gtk.RESPONSE_OK)
+        self.response(Gtk.RESPONSE_OK)
 
     def __init__(self, **args):
-        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                   gtk.STOCK_OK, gtk.RESPONSE_OK)
-        gtk.Dialog.__init__(self, buttons=buttons, **args)
+        buttons = (Gtk.STOCK_CANCEL, Gtk.RESPONSE_CANCEL,
+                   Gtk.STOCK_OK, Gtk.RESPONSE_OK)
+        Gtk.Dialog.__init__(self, buttons=buttons, **args)
 
-        self.label = gtk.Label()
+        self.label = Gtk.Label()
         self.label.set_size_request(300, 100)
         # pylint: disable-msg=E1101
         self.vbox.pack_start(self.label, 1, 1, 0)
 
-        self.text = gtk.Entry()
+        self.text = Gtk.Entry()
         self.text.connect("activate", self.respond_ok, None)
         # pylint: disable-msg=E1101
         self.vbox.pack_start(self.text, 1, 1, 0)
@@ -45,15 +45,15 @@ class TextInputDialog(gtk.Dialog):
         self.text.show()
 
 
-class ChoiceDialog(gtk.Dialog):
+class ChoiceDialog(Gtk.Dialog):
     editable = False
 
     def __init__(self, choices, **args):
-        buttons = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
-                   gtk.STOCK_OK, gtk.RESPONSE_OK)
-        gtk.Dialog.__init__(self, buttons=buttons, **args)
+        buttons = (Gtk.STOCK_CANCEL, Gtk.RESPONSE_CANCEL,
+                   Gtk.STOCK_OK, Gtk.RESPONSE_OK)
+        Gtk.Dialog.__init__(self, buttons=buttons, **args)
 
-        self.label = gtk.Label()
+        self.label = Gtk.Label()
         self.label.set_size_request(300, 100)
         # pylint: disable-msg=E1101
         self.vbox.pack_start(self.label, 1, 1, 0)
@@ -69,7 +69,7 @@ class ChoiceDialog(gtk.Dialog):
         self.vbox.pack_start(self.choice, 1, 1, 0)
         self.choice.show()
 
-        self.set_default_response(gtk.RESPONSE_OK)
+        self.set_default_response(Gtk.RESPONSE_OK)
 
 
 class EditableChoiceDialog(ChoiceDialog):
@@ -81,10 +81,10 @@ class EditableChoiceDialog(ChoiceDialog):
         self.choice.child.set_activates_default(True)
 
 
-class ExceptionDialog(gtk.MessageDialog):
+class ExceptionDialog(Gtk.MessageDialog):
     def __init__(self, exception, **args):
-        gtk.MessageDialog.__init__(self, buttons=gtk.BUTTONS_OK,
-                                   type=gtk.MESSAGE_ERROR, **args)
+        Gtk.MessageDialog.__init__(self, buttons=Gtk.BUTTONS_OK,
+                                   type=Gtk.MESSAGE_ERROR, **args)
         self.set_property("text", _("An error has occurred"))
         self.format_secondary_text(str(exception))
 
@@ -96,25 +96,22 @@ class ExceptionDialog(gtk.MessageDialog):
         LOG.error("----------------------------")
 
 
-class FieldDialog(gtk.Dialog):
+class FieldDialog(Gtk.Dialog):
     def __init__(self, **kwargs):
         if "buttons" not in kwargs.keys():
-            kwargs["buttons"] = (gtk.STOCK_OK, gtk.RESPONSE_OK,
-                                 gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-
+            kwargs["buttons"] = (Gtk.STOCK_OK, Gtk.RESPONSE_OK,
+                                 Gtk.STOCK_CANCEL, Gtk.RESPONSE_CANCEL)
+        # NJP self.set_default_response(Gtk.RESPONSE_OK)                      
         self.__fields = {}
-        self.set_default_response(gtk.RESPONSE_OK)
-
-        gtk.Dialog.__init__(self, **kwargs)
-
+        Gtk.Dialog.__init__(self, **kwargs)
+        
     def response(self, _):
-        LOG.debug("Blocking response")
-        return
+        LOG.debug("Blocking response")        
 
     def add_field(self, label, widget, validator=None):
-        box = gtk.HBox(True, 2)
+        box = Gtk.HBox(True, 2)
 
-        lab = gtk.Label(label)
+        lab = Gtk.Label(label)
         lab.show()
 
         widget.set_size_request(150, -1)
@@ -133,11 +130,11 @@ class FieldDialog(gtk.Dialog):
         return self.__fields.get(label, None)
 
 
-class OverwriteDialog(gtk.MessageDialog):
+class OverwriteDialog(Gtk.MessageDialog):
     def __init__(self, filename):
-        gtk.Dialog.__init__(self,
-                            buttons=(_("Overwrite"), gtk.RESPONSE_OK,
-                                     gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
+        Gtk.Dialog.__init__(self,
+                            buttons=(_("Overwrite"), Gtk.RESPONSE_OK,
+                                     Gtk.STOCK_CANCEL, Gtk.RESPONSE_CANCEL))
 
         self.set_property("text", _("File Exists"))
 
@@ -149,9 +146,9 @@ class OverwriteDialog(gtk.MessageDialog):
 
 if __name__ == "__main__":
     # pylint: disable-msg=C0103
-    d = FieldDialog(buttons=(gtk.STOCK_OK, gtk.RESPONSE_OK))
-    d.add_field("Foo", gtk.Entry())
+    d = FieldDialog(buttons=(Gtk.STOCK_OK, Gtk.RESPONSE_OK))
+    d.add_field("Foo", Gtk.Entry())
     d.add_field("Bar", make_choice(["A", "B"]))
     d.run()
-    gtk.main()
+    Gtk.main()
     d.destroy()

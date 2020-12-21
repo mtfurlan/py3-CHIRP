@@ -14,6 +14,7 @@ py3-CHIRP has been tested in Python3.9 on various platforms. Known dependencies 
 - future
 - six
 - pypiwin32 (for Windows)
+- pyGObject
 
 ## Testing
 
