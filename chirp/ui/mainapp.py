@@ -1377,7 +1377,7 @@ of file.
         return False
 
     def do_radioreference(self, do_import):
-        self.window.set_cursor(Gtk.Gdk.Cursor(Gtk.Gdk.WATCH))
+        self.window.set_cursor(Gdk.Cursor(Gdk.CursorType.WATCH))
         if not self.do_radioreference_prompt():
             self.window.set_cursor(None)
             return
@@ -1388,9 +1388,9 @@ of file.
 
         # Do this in case the import process is going to take a while
         # to make sure we process events leading up to this
-        Gtk.Gdk.window_process_all_updates()
-        while Gtk.events_pending():
-            Gtk.main_iteration(False)
+        #Gtk.Gdk.window_process_all_updates()
+        #while Gtk.events_pending():
+        #    Gtk.main_iteration(False)
 
         if do_import:
             eset = self.get_current_editorset()
@@ -1776,8 +1776,8 @@ of file.
         <menuitem action="irfinder"/> -->
       </menu>
       <menu action="querysrc" name="querysrc">
-      <!--  <menuitem action="qdmrmarc"/>
-        <menuitem action="qradioreference"/> -->
+      <!--  <menuitem action="qdmrmarc"/> -->
+        <menuitem action="qradioreference"/>
         <menu action="qrbook" name="qrbook">
             <menuitem action="qrbookpolitical"/>
             <menuitem action="qrbookproximity"/>
