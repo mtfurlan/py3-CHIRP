@@ -6,6 +6,8 @@ The official CHIRP project's main branch does not support Python 3 and depends o
 
 py3-CHIRP is a fork of the py3 branch of the official CHIRP project with some syntax fixes that seem to be leftover from Python2.
 
+py3-CHIRP will use the wxPython GUI toolkit. Code using the Gtk GUI will be migrated.
+
 ## Dependencies
 
 py3-CHIRP has been tested in Python3.9 on various platforms. Known dependencies that don't come out of the box with Python are as follows:
@@ -14,21 +16,16 @@ py3-CHIRP has been tested in Python3.9 on various platforms. Known dependencies 
 - future
 - six
 - pypiwin32 (for Windows)
-- pyGObject
+- pyGObject (For the time being)
 
 ## Testing
 
 For a list of supported radios (tested and untested) see [RADIOS.md](https://github.com/mpoletiek/py3-CHIRP/blob/main/RADIOS.md)
 
-Depending on the platform you're testing on, you should use a different script to start CHIRP.
+Script to start CHIRP.
 
-### Linux & MacOS
-`chirpw`
-
-### Windows
+### Linux & MacOS & Windows
 `chirpwx.py`
-
-
 
 ## The Story
 
