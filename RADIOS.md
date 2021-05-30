@@ -106,7 +106,7 @@ Radios marked `TESTED` are known to work with the current release of py3-CHIRP.
 - UV-9S (use Radioddity UV-5RX3)
 - UV-9X+ (use UV-82HP)
 - UV-59T (use Radioddity UV-5RX3)
-- UV-82/82C/82L/82X
+- UV-82/82C/82L/82X `TESTED`
 - UV-82HP/82DX/82HX (3 power levels)
 - UV-82III (1 x PTT)
 - UV-82III (2 x PTT) (use Radioddity UV-82X3)
