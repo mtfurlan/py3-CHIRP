@@ -406,10 +406,10 @@ def show_diff_blob(title, result):
 
     tags = b.get_tag_table()
     for color in ["red", "blue", "green", "grey"]:
-        tag = gtk.TextTag(color)
+        tag = gtk.TextTag()
         tag.set_property("foreground", color)
         tags.add(tag)
-    tag = gtk.TextTag("bold")
+    tag = gtk.TextTag()
     tag.set_property("weight", pango.WEIGHT_BOLD)
     tags.add(tag)
 
@@ -430,7 +430,8 @@ def show_diff_blob(title, result):
         else:
             tags = ()
         b.insert_with_tags_by_name(b.get_end_iter(), line + os.linesep, *tags)
-    v = gtk.TextView(b)
+    v = gtk.TextView()
+    v.set_buffer(b)
     fontdesc = pango.FontDescription("Courier %i" % fontsize)
     v.modify_font(fontdesc)
     v.set_editable(False)
