@@ -50,7 +50,7 @@ def decode_freq(data):
         freq *= 10
         freq += FREQ_ENCODE_TABLE.index((data >> shift) & 0xf)
         shift -= 4
-        # LOG.debug("data %04x freq %d shift %d" % (data, freq, shift))
+        # print("data %04x freq %d shift %d" % (data, freq, shift))
     return freq
 
 
@@ -245,7 +245,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
             self.pipe.write(next(query))
             resp = self.pipe.read(9)
             if len(resp) != 9:
-                LOG.debug("Got:\n%s" % util.hexprint(resp))
+                print("Got:\n%s" % util.hexprint(resp))
                 LOG.info("Retrying identification...")
                 time.sleep(1)
                 continue
@@ -653,13 +653,13 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
                         setting = element.get_name()
 
                     if element.has_apply_callback():
-                        LOG.debug("Using apply callback")
+                        print("Using apply callback")
                         element.run_apply_callback()
                     else:
-                        LOG.debug("Setting %s = %s" % (setting, element.value))
+                        print("Setting %s = %s" % (setting, element.value))
                         setattr(obj, setting, element.value)
                 except Exception as e:
-                    LOG.debug(element.get_name())
+                    print(element.get_name())
                     raise
 
     def _set_fm_preset(self, settings):
@@ -673,7 +673,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
                     value = int(val[1].get_value()*10-760)
                 else:
                     value = 0xffff
-                LOG.debug("Setting fm_presets_%1i[%1i] = %s" %
+                print("Setting fm_presets_%1i[%1i] = %s" %
                           (bank, index, value))
                 if bank == 0:
                     setting = self._memobj.fm_presets_0
@@ -681,7 +681,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
                     setting = self._memobj.fm_presets_1
                 setting[index] = value
             except Exception as e:
-                LOG.debug(element.get_name())
+                print(element.get_name())
                 raise
 
     def _set_freq_settings(self, settings):
@@ -691,7 +691,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
                         element.get_name(),
                         encode_freq(int(element.value)))
             except Exception as e:
-                LOG.debug(element.get_name())
+                print(element.get_name())
                 raise
 
     def get_raw_memory(self, number):
@@ -738,7 +738,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
         # always set it even if no dtcs is used
         mem.dtcs_polarity = "%s%s" % (tpol or "N", rpol or "N")
 
-        LOG.debug("Got TX %s (%i) RX %s (%i)" %
+        print("Got TX %s (%i) RX %s (%i)" %
                   (txmode, _mem.tx_tone, rxmode, _mem.rx_tone))
 
     def _is_txinh(self, _mem):
@@ -839,7 +839,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
         _mem.rx_tone = rx_tone
         _mem.tx_tone = tx_tone
 
-        LOG.debug("Set TX %s (%i) RX %s (%i)" %
+        print("Set TX %s (%i) RX %s (%i)" %
                   (tx_mode, _mem.tx_tone, rx_mode, _mem.rx_tone))
 
     def set_memory(self, mem):
@@ -1397,13 +1397,13 @@ class KGUV6DRadio(KGUVD1PRadio):
                         setting = element.get_name()
 
                     if element.has_apply_callback():
-                        LOG.debug("Using apply callback")
+                        print("Using apply callback")
                         element.run_apply_callback()
                     else:
-                        LOG.debug("Setting %s = %s" % (setting, element.value))
+                        print("Setting %s = %s" % (setting, element.value))
                         setattr(obj, setting, element.value)
                 except Exception as e:
-                    LOG.debug(element.get_name())
+                    print(element.get_name())
                     raise
 
     def _set_fm_preset(self, settings):
@@ -1417,7 +1417,7 @@ class KGUV6DRadio(KGUVD1PRadio):
                     value = int(val[1].get_value()*10-760)
                 else:
                     value = 0xffff
-                LOG.debug("Setting fm_presets_%1i[%1i] = %s" %
+                print("Setting fm_presets_%1i[%1i] = %s" %
                           (bank, index, value))
                 if bank == 0:
                     setting = self._memobj.fm_presets_0
@@ -1425,7 +1425,7 @@ class KGUV6DRadio(KGUVD1PRadio):
                     setting = self._memobj.fm_presets_1
                 setting[index] = value
             except Exception as e:
-                LOG.debug(element.get_name())
+                print(element.get_name())
                 raise
 
     @classmethod

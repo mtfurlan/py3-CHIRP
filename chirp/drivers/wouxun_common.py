@@ -34,12 +34,12 @@ def do_download(radio, start, end, blocksize):
     image = b""
     for i in range(start, end, blocksize):
         cmd = struct.pack(b">cHb", b"R", i, blocksize)
-        LOG.debug(util.hexprint(cmd))
+        print(util.hexprint(cmd))
         radio.pipe.write(cmd)
         length = len(cmd) + blocksize
         resp = radio.pipe.read(length)
         if len(resp) != (len(cmd) + blocksize):
-            LOG.debug(util.hexprint(resp))
+            print(util.hexprint(resp))
             raise Exception("Failed to read full block (%i!=%i)" %
                             (len(resp), len(cmd) + blocksize))
 
@@ -62,8 +62,6 @@ def do_upload(radio, start, end, blocksize):
     ptr = start
     for i in range(start, end, blocksize):
         cmd = struct.pack(b">cHb", b"W", i, blocksize)
-        #TODO: remove ptr and do
-        # chunk = radio.get_mmap()[i:i+blocksize].encode()
         chunk = radio.get_mmap()[ptr:ptr+blocksize].encode()
         ptr += blocksize
         radio.pipe.write(cmd + chunk)
