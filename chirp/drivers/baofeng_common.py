@@ -39,34 +39,44 @@ def _clean_buffer(radio):
 
 def _rawrecv(radio, amount):
     """Raw read from the radio device"""
-    data = ""
+    data = b""
     try:
         data = radio.pipe.read(amount)
     except:
+        #TODO remoe debug
+        import traceback; print(traceback.format_exc())
         msg = "Generic error reading data from radio; check your cable."
         raise errors.RadioError(msg)
 
     if len(data) != amount:
-        msg = "Error reading data from radio: not the amount of data we want."
+        msg = f"Error reading data from radio: expected {amount} bytes, got {len(data)}."
         raise errors.RadioError(msg)
 
+    #TODO remoe debug
+    print(f"read {len(data)} bytes");
     return data
 
 
 def _rawsend(radio, data):
     """Raw send to the radio device"""
+    #TODO remoe debug
+    print(f"writing {len(data)} bytes")
+    print(util.hexprint(data))
     try:
         radio.pipe.write(data)
     except:
+        #TODO remoe debug
+        #import pdb; pdb.set_trace()
+        import traceback; print(traceback.format_exc())
         raise errors.RadioError("Error sending data to radio")
 
 
-def _make_frame(cmd, addr, length, data=""):
+def _make_frame(cmd, addr, length, data=b""):
     """Pack the info in the headder format"""
-    frame = struct.pack(">BHB", ord(cmd), addr, length)
+    frame = struct.pack(b">BHB", ord(cmd), addr, length)
     # add the data if set
     if len(data) != 0:
-        frame += data
+        frame += data.encode()
     # return the data
     return frame
 
@@ -97,7 +107,7 @@ def _get_radio_firmware_version(radio):
                       radio._recv_block_size)
     radio.pipe.write(msg)
     block = _recv(radio, radio._fw_ver_start, radio._recv_block_size)
-    _rawsend(radio, "\x06")
+    _rawsend(radio, b"\x06")
     time.sleep(0.05)
     version = block[0:16]
     return version
@@ -126,21 +136,21 @@ def _do_ident(radio, magic):
     _rawsend(radio, magic)
 
     ack = _rawrecv(radio, 1)
-    if ack != "\x06":
+    if ack != b"\x06":
         if ack:
             LOG.debug(repr(ack))
         raise errors.RadioError("Radio did not respond")
 
-    _rawsend(radio, "\x02")
+    _rawsend(radio, b"\x02")
 
     # Ok, get the response
     ident = _rawrecv(radio, radio._magic_response_length)
 
     # check if response is OK
-    if not ident.startswith("\xaa") or not ident.endswith("\xdd"):
+    if not ident.startswith(b"\xaa") or not ident.endswith(b"\xdd"):
         # bad response
         msg = "Unexpected response, got this:"
-        msg +=  util.hexprint(ident)
+        msg += util.hexprint(ident)
         LOG.debug(msg)
         raise errors.RadioError("Unexpected response from radio.")
 
@@ -148,9 +158,9 @@ def _do_ident(radio, magic):
     LOG.info("Valid response, got this:")
     LOG.debug(util.hexprint(ident))
 
-    _rawsend(radio, "\x06")
+    _rawsend(radio, b"\x06")
     ack = _rawrecv(radio, 1)
-    if ack != "\x06":
+    if ack != b"\x06":
         if ack:
             LOG.debug(repr(ack))
         raise errors.RadioError("Radio refused clone")
@@ -165,7 +175,7 @@ def _ident_radio(radio):
             data = _do_ident(radio, magic)
             return data
         except errors.RadioError as e:
-            print (e)
+            print(e)
             error = e
             time.sleep(2)
     if error:
@@ -183,7 +193,7 @@ def _download(radio):
     LOG.info("Radio firmware version:")
     LOG.debug(util.hexprint(radio_ident))
 
-    if radio_ident == "\xFF" * 16:
+    if radio_ident == b"\xFF" * 16:
         ident += radio.MODEL.ljust(8)
     elif radio.MODEL in ("GMRS-V1", "MURS-V1"):
         # check if radio_ident is OK
@@ -200,7 +210,7 @@ def _download(radio):
     status.msg = "Cloning from radio..."
     radio.status_fn(status)
 
-    data = ""
+    data = b""
     for addr in range(0, radio._mem_size, radio._recv_block_size):
         frame = _make_frame("S", addr, radio._recv_block_size)
         # DEBUG
@@ -212,14 +222,14 @@ def _download(radio):
 
         if radio._ack_block:
             ack = _rawrecv(radio, 1)
-            if ack != "\x06":
+            if ack != b"\x06":
                 raise errors.RadioError(
                     "Radio refused to send block 0x%04x" % addr)
 
         # now we read
         d = _recv(radio, addr, radio._recv_block_size)
 
-        _rawsend(radio, "\x06")
+        _rawsend(radio, b"\x06")
         time.sleep(0.05)
 
         # aggregate the data
@@ -283,7 +293,7 @@ def _upload(radio):
 
             # receiving the response
             ack = _rawrecv(radio, 1)
-            if ack != "\x06":
+            if ack != b"\x06":
                 msg = "Bad ack writing block 0x%04x" % addr
                 raise errors.RadioError(msg)
 
@@ -307,12 +317,22 @@ def _split(rf, f1, f2):
     # if you get here is because the freq pairs are split
     return True
 
+
 class BaofengCommonHT(chirp_common.CloneModeRadio,
                       chirp_common.ExperimentalRadio):
-    """Baofeng HT Sytle Radios"""
+    """Baofeng HT Style Radios"""
     VENDOR = "Baofeng"
     MODEL = ""
     IDENT = ""
+
+    GMRS_FREQS1 = [462.5625, 462.5875, 462.6125, 462.6375, 462.6625,
+                   462.6875, 462.7125]
+    GMRS_FREQS2 = [467.5625, 467.5875, 467.6125, 467.6375, 467.6625,
+                   467.6875, 467.7125]
+    GMRS_FREQS3 = [462.5500, 462.5750, 462.6000, 462.6250, 462.6500,
+                   462.6750, 462.7000, 462.7250]
+    GMRS_FREQS = GMRS_FREQS1 + GMRS_FREQS2 + GMRS_FREQS3 * 2
+    _gmrs = False
 
     def sync_in(self):
         """Download from radio"""
@@ -342,7 +362,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
             LOG.exception('Unexpected error during upload')
             raise errors.RadioError('Unexpected error communicating '
                                     'with the radio')
-                                    
+
     def get_features(self):
         """Get the radio's features"""
 
@@ -380,12 +400,12 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
         rf.valid_tuning_steps = [2.5, 5.0, 6.25, 10.0, 12.5, 20.0, 25.0, 50.0]
 
         return rf
-        
+
     def _is_txinh(self, _mem):
         raw_tx = ""
         for i in range(0, 4):
             raw_tx += _mem.txfreq[i].get_raw()
-        return raw_tx == "\xFF\xFF\xFF\xFF"
+        return raw_tx == b"\xFF\xFF\xFF\xFF"
 
     def get_memory(self, number):
         _mem = self._memobj.memory[number]
@@ -394,7 +414,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
         mem = chirp_common.Memory()
         mem.number = number
 
-        if _mem.get_raw()[0] == "\xff":
+        if _mem.get_raw()[0] == b"\xff":
             mem.empty = True
             return mem
 
@@ -408,7 +428,8 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
             # TX freq set
             offset = (int(_mem.txfreq) * 10) - mem.freq
             if offset != 0:
-                if _split(self.get_features(), mem.freq, int(_mem.txfreq) * 10):
+                if _split(self.get_features(), mem.freq, int(
+                          _mem.txfreq) * 10):
                     mem.duplex = "split"
                     mem.offset = int(_mem.txfreq) * 10
                 elif offset < 0:
@@ -421,7 +442,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
                 mem.offset = 0
 
         for char in _nam.name:
-            if str(char) == "\xFF":
+            if str(char) == b"\xFF":
                 char = " "  # The OEM software may have 0xFF mid-name
             mem.name += str(char)
         mem.name = mem.name.rstrip()
@@ -508,17 +529,44 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
         _nam = self._memobj.names[mem.number]
 
         if mem.empty:
-            _mem.set_raw("\xff" * 16)
-            _nam.set_raw("\xff" * 16)
+            _mem.set_raw(b"\xff" * 16)
+            _nam.set_raw(b"\xff" * 16)
             return
 
-        _mem.set_raw("\x00" * 16)
+        _mem.set_raw(b"\x00" * 16)
+
+        if self._gmrs:
+            if mem.number >= 1 and mem.number <= 30:
+                GMRS_FREQ = int(self.GMRS_FREQS[mem.number - 1] * 1000000)
+                mem.freq = GMRS_FREQ
+                if mem.number <= 22:
+                    mem.duplex = ''
+                    mem.offset = 0
+                    if mem.number >= 8 and mem.number <= 14:
+                        mem.mode = "NFM"
+                        mem.power = self.POWER_LEVELS[2]
+                if mem.number > 22:
+                    mem.duplex = '+'
+                    mem.offset = 5000000
+            elif float(mem.freq) / 1000000 in self.GMRS_FREQS:
+                if float(mem.freq) / 1000000 in self.GMRS_FREQS2:
+                    mem.offset = 0
+                    mem.mode = "NFM"
+                    mem.power = self.POWER_LEVELS[2]
+                if float(mem.freq) / 1000000 in self.GMRS_FREQS3:
+                    if mem.duplex == '+':
+                        mem.offset = 5000000
+                    else:
+                        mem.offset = 0
+            else:
+                mem.duplex = 'off'
+                mem.offset = 0
 
         _mem.rxfreq = mem.freq / 10
 
         if mem.duplex == "off":
             for i in range(0, 4):
-                _mem.txfreq[i].set_raw("\xFF")
+                _mem.txfreq[i].set_raw(b"\xFF")
         elif mem.duplex == "split":
             _mem.txfreq = mem.offset / 10
         elif mem.duplex == "+":
@@ -533,7 +581,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
             try:
                 _nam.name[i] = mem.name[i]
             except IndexError:
-                _nam.name[i] = "\xFF"
+                _nam.name[i] = b"\xFF"
 
         rxmode = txmode = ""
         if mem.tmode == "Tone":
