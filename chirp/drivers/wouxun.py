@@ -62,7 +62,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
     MODEL = "KG-UVD1P"
     _model = "KG669V"
 
-    _querymodel = ("HiWOUXUN\x02", "PROGUV6X\x02")
+    _querymodel = (b"HiWOUXUN\x02", b"PROGUV6X\x02")
 
     CHARSET = list("0123456789") + \
         [chr(x + ord("A")) for x in range(0, 26)] + list("?+-")
@@ -242,14 +242,14 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
         """Do the original wouxun identification dance"""
         query = self._get_querymodel()
         for _i in range(0, 10):
-            self.pipe.write(query.next())
+            self.pipe.write(next(query))
             resp = self.pipe.read(9)
             if len(resp) != 9:
                 LOG.debug("Got:\n%s" % util.hexprint(resp))
                 LOG.info("Retrying identification...")
                 time.sleep(1)
                 continue
-            if resp[2:8] != self._model:
+            if resp[2:8] != self._model.encode():
                 raise Exception("I can't talk to this model (%s)" %
                                 util.hexprint(resp))
             return
@@ -260,10 +260,10 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
 
     def _start_transfer(self):
         """Tell the radio to go into transfer mode"""
-        self.pipe.write("\x02\x06")
+        self.pipe.write(b"\x02\x06")
         time.sleep(0.05)
         ack = self.pipe.read(1)
-        if ack != "\x06":
+        if ack != b"\x06":
             raise Exception("Radio refused transfer mode")
 
     def _download(self):
@@ -876,12 +876,17 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
         else:
             _mem.power_high = True
 
-        _nam.name = [0xFF] * 6
+        valid_name_length = self.get_features().valid_name_length
+
+        if(len(mem.name) > valid_name_length):
+            raise Exception(f"name '{mem.name}' too long, {len(mem.name)} > {valid_name_length}")
+
+        _nam.name = [0xFF] * valid_name_length
         for i in range(0, len(mem.name)):
             try:
                 _nam.name[i] = self.CHARSET.index(mem.name[i])
             except IndexError:
-                raise Exception("Character `%s' not supported")
+                raise Exception(f"Character '{mem.name[i]}' not supported")
 
         for setting in mem.extra:
             setattr(_mem, setting.get_name(), setting.value)
@@ -1436,7 +1441,7 @@ class KG816Radio(KGUVD1PRadio, chirp_common.ExperimentalRadio):
     """Wouxun KG-816"""
     MODEL = "KG-816"
 
-    _querymodel = "HiWOUXUN\x02"
+    _querymodel = b"HiWOUXUN\x02"
 
     _MEM_FORMAT = """
         #seekto 0x0010;
