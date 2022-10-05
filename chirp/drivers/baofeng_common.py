@@ -43,7 +43,6 @@ def _rawrecv(radio, amount):
     try:
         data = radio.pipe.read(amount)
     except:
-        #TODO remoe debug
         import traceback; print(traceback.format_exc())
         msg = "Generic error reading data from radio; check your cable."
         raise errors.RadioError(msg)
@@ -52,21 +51,14 @@ def _rawrecv(radio, amount):
         msg = f"Error reading data from radio: expected {amount} bytes, got {len(data)}."
         raise errors.RadioError(msg)
 
-    #TODO remoe debug
-    print(f"read {len(data)} bytes");
     return data
 
 
 def _rawsend(radio, data):
     """Raw send to the radio device"""
-    #TODO remoe debug
-    print(f"writing {len(data)} bytes")
-    print(util.hexprint(data))
     try:
         radio.pipe.write(data)
     except:
-        #TODO remoe debug
-        #import pdb; pdb.set_trace()
         import traceback; print(traceback.format_exc())
         raise errors.RadioError("Error sending data to radio")
 
@@ -74,9 +66,8 @@ def _rawsend(radio, data):
 def _make_frame(cmd, addr, length, data=b""):
     """Pack the info in the headder format"""
     frame = struct.pack(b">BHB", ord(cmd), addr, length)
-    # add the data if set
     if len(data) != 0:
-        frame += data.encode()
+        frame += data
     # return the data
     return frame
 
@@ -281,6 +272,7 @@ def _upload(radio):
     radio.status_fn(status)
 
     # the fun start here
+    data = b""
     for start, end in _ranges:
         for addr in range(start, end, radio._send_block_size):
             # sending the data
@@ -322,6 +314,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
                       chirp_common.ExperimentalRadio):
     """Baofeng HT Style Radios"""
     VENDOR = "Baofeng"
+    NEEDS_COMPAT_SERIAL = False
     MODEL = ""
     IDENT = ""
 
@@ -347,7 +340,7 @@ class BaofengCommonHT(chirp_common.CloneModeRadio,
             LOG.exception('Unexpected error during download')
             raise errors.RadioError('Unexpected error communicating '
                                     'with the radio')
-        self._mmap = memmap.MemoryMap(data)
+        self._mmap = memmap.MemoryMapBytes(data)
         self.process_mmap()
 
     def sync_out(self):

@@ -113,6 +113,7 @@ class MemoryMapBytes(object):
         return self
 
 
+# TODO: I don't think we can do this in python 3 at all
 class MemoryMap(MemoryMapBytes):
     """Compatibility version of MemoryMapBytes
 

@@ -54,7 +54,7 @@ def do_download(radio, start, end, blocksize):
             status.msg = "Cloning from radio"
             radio.status_fn(status)
 
-    return memmap.MemoryMap(image)
+    return memmap.MemoryMapBytes(image)
 
 
 def do_upload(radio, start, end, blocksize):
@@ -62,7 +62,7 @@ def do_upload(radio, start, end, blocksize):
     ptr = start
     for i in range(start, end, blocksize):
         cmd = struct.pack(b">cHb", b"W", i, blocksize)
-        chunk = radio.get_mmap()[ptr:ptr+blocksize].encode()
+        chunk = radio.get_mmap()[ptr:ptr+blocksize]
         ptr += blocksize
         radio.pipe.write(cmd + chunk)
         print(util.hexprint(cmd + chunk))

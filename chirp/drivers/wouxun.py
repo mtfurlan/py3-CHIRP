@@ -60,6 +60,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
     """Wouxun KG-UVD1P,UV2,UV3"""
     VENDOR = "Wouxun"
     MODEL = "KG-UVD1P"
+    NEEDS_COMPAT_SERIAL = False
     _model = "KG669V"
 
     _querymodel = (b"HiWOUXUN\x02", b"PROGUV6X\x02")
@@ -913,6 +914,7 @@ class KGUVD1PRadio(chirp_common.CloneModeRadio,
 class KGUV6DRadio(KGUVD1PRadio):
     """Wouxun KG-UV6 (D and X variants)"""
     MODEL = "KG-UV6"
+    NEEDS_COMPAT_SERIAL = False
 
     _querymodel = ("HiWXUVD1\x02", "HiKGUVD1\x02")
 
@@ -1440,6 +1442,7 @@ class KGUV6DRadio(KGUVD1PRadio):
 class KG816Radio(KGUVD1PRadio, chirp_common.ExperimentalRadio):
     """Wouxun KG-816"""
     MODEL = "KG-816"
+    NEEDS_COMPAT_SERIAL = False
 
     _querymodel = b"HiWOUXUN\x02"
 
@@ -1566,6 +1569,7 @@ class KG816Radio(KGUVD1PRadio, chirp_common.ExperimentalRadio):
 class KG818Radio(KG816Radio):
     """Wouxun KG-818"""
     MODEL = "KG-818"
+    NEEDS_COMPAT_SERIAL = False
 
     @classmethod
     def match_model(cls, filedata, filename):

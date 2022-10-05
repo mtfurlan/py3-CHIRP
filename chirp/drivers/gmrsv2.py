@@ -83,6 +83,7 @@ class GMRSV2(baofeng_common.BaofengCommonHT):
     """BTech GMRS-V2"""
     VENDOR = "BTECH"
     MODEL = "GMRS-V2"
+    NEEDS_COMPAT_SERIAL = False
 
     _fileid = [GMRSV2_fp1, ]
 
